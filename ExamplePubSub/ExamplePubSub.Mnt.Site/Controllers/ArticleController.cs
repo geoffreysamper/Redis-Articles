@@ -74,6 +74,7 @@ namespace ExamplePubSub.Mnt.Site.Controllers
                 article.Body = inputModel.Body;
 
                 _articleRepository.Save(article);
+                MvcApplication.PublishMessageArticleUpdated(article.Id);
                 return RedirectToAction("Index", "Home", new {successMessage = "Article saved" });
             }
 

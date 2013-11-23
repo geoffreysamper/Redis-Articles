@@ -1,5 +1,6 @@
 This contains a redis example Pub sub. 
-One special remark in the pub.site uses the data cache of asp.net instead of redis. We will use the redis pubsub to invalidate the data.
+One special remark: The pub site uses the data cache of asp.net instead of redis this is on purpose it is the current scenario i'm in. 
+
 
 
 ##Setup
