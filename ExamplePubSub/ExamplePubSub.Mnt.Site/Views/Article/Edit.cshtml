@@ -1,0 +1,41 @@
+﻿@using System.Web.UI.WebControls
+@model ExamplePubSub.Domain.Article
+
+
+<hgroup class="title">
+    
+    
+    <h1>@ViewBag.Title</h1>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend>flqdfklsdmlkf</legend>
+        <ol>
+            <li>
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Intro)
+                @Html.TextAreaFor(m => m.Intro, new { rows = 5, cols = 30 })
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Body)
+                @Html.TextAreaFor(m => m.Body, new {rows =10, cols=30})
+            </li>
+        </ol>
+        <input type="submit" value="Save" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

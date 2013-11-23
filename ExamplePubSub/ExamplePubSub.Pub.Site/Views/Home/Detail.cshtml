@@ -1,0 +1,25 @@
+﻿@model ExamplePubSub.Domain.Article
+@{
+    ViewBag.Title = Model.Title;
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h2>@ViewBag.Title</h2>
+                <h3>Last modified on: @Model.LastModifiedDate</h3>
+            </hgroup>
+            <p>
+            </p>
+        </div>
+    </section>
+}
+<div class="intro">
+    @Model.Intro
+
+</div>
+
+
+<div class="articleBody">
+    @Model.Body
+</div>

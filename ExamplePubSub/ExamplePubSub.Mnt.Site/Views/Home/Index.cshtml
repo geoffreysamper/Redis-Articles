@@ -1,0 +1,28 @@
+﻿@model IEnumerable<  ExamplePubSub.Domain.Article>
+@{
+    ViewBag.Title = "Article Overview";
+    
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+            <p>
+            </p>
+        </div>
+    </section>
+}
+<ul>
+@Html.ActionLink("Create new article", "Create", "Article")    
+    <h3>Existing articles</h3>
+       
+    @foreach (var article in Model)
+    {
+        <li>@Html.ActionLink(article.Title, "Edit", "Article", new {id= article.Id}, null)</li>
+    }
+</ul>
+
+
