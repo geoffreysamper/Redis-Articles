@@ -24,7 +24,7 @@ namespace ExamplePubSub.Pub.Site.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            _articleService = new ArticleService(requestContext.HttpContext, _articleRespository);
+            _articleService = new ArticleService(requestContext.HttpContext, _articleRespository, MvcApplication.ArticleMessageService);
             
         }
 

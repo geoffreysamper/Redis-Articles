@@ -20,7 +20,8 @@ namespace ExamplePubSub.Mnt.Site
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static RedisClient redisPublisher = new RedisClient(RedisConstants.ServerIp);
+       
+        public static readonly ArticleMessagesService ArticleMessageService = new ArticleMessagesService();
 
 
         protected void Application_Start()
@@ -34,12 +35,9 @@ namespace ExamplePubSub.Mnt.Site
             AuthConfig.RegisterAuth();
         }
 
-        public static void PublishMessageArticleUpdated(int articleId)
+        protected void Application_End()
         {
-            string message = JsonConvert.SerializeObject(new ArticleUpdateMessage() { ArticleId = articleId });
-
-            redisPublisher.PublishMessage(RedisConstants.ChannelArticle, message );
-
+            ArticleMessageService.Dispose();
         }
     }
 }

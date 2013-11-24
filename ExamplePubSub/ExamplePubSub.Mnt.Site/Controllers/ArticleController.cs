@@ -13,9 +13,18 @@ namespace ExamplePubSub.Mnt.Site.Controllers
     {
        private ArticleRepository _articleRepository;
 
+        private ArticleService _articleService;
+
        public ArticleController()
         {
             _articleRepository = new ArticleRepository();
+           
+        }
+
+        protected override void Initialize(RequestContext requestContext)
+        {
+            _articleService = new ArticleService(requestContext.HttpContext,_articleRepository,MvcApplication.ArticleMessageService);
+            base.Initialize(requestContext);
         }
 
         public ActionResult Edit(int id)
@@ -48,7 +57,7 @@ namespace ExamplePubSub.Mnt.Site.Controllers
             {
                 article.Id = 0;
 
-                _articleRepository.Save(article);
+                _articleService.Save(article);
                 return RedirectToAction("Index", "Home", new { successMessage = "Article saved" });
             }
 
@@ -73,8 +82,7 @@ namespace ExamplePubSub.Mnt.Site.Controllers
                 article.Title = inputModel.Title;
                 article.Body = inputModel.Body;
 
-                _articleRepository.Save(article);
-                MvcApplication.PublishMessageArticleUpdated(article.Id);
+                _articleService.Save(article);                
                 return RedirectToAction("Index", "Home", new {successMessage = "Article saved" });
             }
 

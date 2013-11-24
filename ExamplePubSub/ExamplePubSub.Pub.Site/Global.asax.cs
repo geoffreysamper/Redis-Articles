@@ -22,8 +22,7 @@ namespace ExamplePubSub.Pub.Site
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        private RedisClient redisConsumer = new RedisClient(RedisConstants.ServerIp);
-
+        public static readonly ArticleMessagesService ArticleMessageService = new ArticleMessagesService();
 
         protected void Application_Start()
         {
@@ -35,23 +34,7 @@ namespace ExamplePubSub.Pub.Site
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
-            var subscription  = redisConsumer.CreateSubscription();
-
-            subscription.OnMessage = (channel, msg) =>
-            {
-                var message = JsonConvert.DeserializeObject<ArticleUpdateMessage>(msg);
-               
-                string key = "article" + message.ArticleId.ToString();
-
-
-                HttpRuntime.Cache.Remove(key);
-
-
-
-            };
-
-            ThreadPool.QueueUserWorkItem(
-                (s) => subscription.SubscribeToChannels(RedisConstants.ChannelArticle));
+            ThreadPool.QueueUserWorkItem((s) => ArticleMessageService.InitializeForSubscription());
             
 
 

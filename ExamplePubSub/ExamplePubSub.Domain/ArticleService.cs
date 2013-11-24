@@ -12,10 +12,13 @@ namespace ExamplePubSub.Domain
 
         private ArticleRepository _articleRepository;
 
-        public ArticleService(HttpContextBase httpContext, ArticleRepository articleRepository)
+        private ArticleMessagesService _articleMessageService;
+
+        public ArticleService(HttpContextBase httpContext, ArticleRepository articleRepository, ArticleMessagesService articleMessagesService)
         {
             this.HttpContext = httpContext;
             this._articleRepository = articleRepository;
+            this._articleMessageService = articleMessagesService;
         }
 
         public Article GetById(int id)
@@ -33,15 +36,21 @@ namespace ExamplePubSub.Domain
 
         }
 
+        public void Save(Article article)
+        {
+            int articleId = article.Id;
+            _articleRepository.Save(article);
+
+            if (articleId > 0)
+            {
+                _articleMessageService.PublishArticle(articleId);
+            }
+            
+        }
+
 
 
     }
 
-    public static class RedisConstants
-    {
-        public const string ServerIp = "192.168.1.128";
-
-        public const string ChannelArticle = "articleUpdate";
-    }
-
+   
 }
